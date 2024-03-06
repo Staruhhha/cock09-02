@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}
+    Удаление объекта
+{% endblock %}
+
+{% block content %}
+    <h1>Подвтердить удаление?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Да</button>
+    </form>
+        <a href="{% url 'order_list' %}" class="btn btn-success">Нет</a>
+{% endblock %}

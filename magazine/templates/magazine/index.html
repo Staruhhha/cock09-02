@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title_name %}
+    Домашняя страница
+{% endblock %}
+
+{#{% block link_bootstrap %}#}
+{##}
+{#{% endblock %}#}
+
+{% block content %}
+<h1>Домашняя страница</h1>
+    <ul>
+        <li><a href="{% url 'catalog_product_page' %}">Каталог продуктов</a></li>
+        <li><a href="{% url 'catalog_suppliers_page' %}">Список поставщиков </a></li>
+    {% if request.user.is_anonymous %}
+        <li><a href="{% url 'log in' %}">Авторизация</a></li>
+        <li><a href="{% url 'regis' %}">Регистрация</a></li>
+    {% else %}
+        <li><a href="{% url 'log out' %}">Выход из аккаунта</a></li>
+    {% endif %}
+
+    <li><a href="{% url 'anon' %}">Аноним</a></li>
+    <li><a href="{% url 'auth' %}">Авторизованный</a></li>
+    <li><a href="{% url 'add' %}">Добавление поставщика</a></li>
+    <li><a href="{% url 'add_change' %}">Добавление и изменение поставщика</a></li>
+    <li><a href="{% url 'change_address' %}">Изменение адреса</a></li>
+
+    </ul>
+
+<div>
+    {% if request.user.is_anonymous %}
+        <h2>Аноним</h2>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <h2>Авторизованный</h2>
+    {% endif %}
+
+    {% if perms.magazine.add_supplier %}
+        <h2>Можешь добавить поставщика</h2>
+    {% endif %}
+    {% if perms.magazine.add_supplier and perms.magazine.change_supplier %}
+        <h2>Можешь добавить и изменить поставщика</h2>
+    {% endif %}
+    {% if perms.magazine.change_address %}
+        <h2>Можешь изменить адрес</h2>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Домашняя страница</title>#}
+{#</head>#}
+{#<body>#}
+{#{% if messages %}#}
+{#    <h1>ОПОВЕЩЕНИЕ</h1>#}
+{#    <ul class="messages">#}
+{#        {% for message in messages %}#}
+{#            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#{% endif %}#}
+{#    <h1>Домашняя страница</h1>#}
+{#    <ul>#}
+{#        <li><a href="{% url 'catalog_product_page' %}">Каталог продуктов</a></li>#}
+{#        <li>#}
+{##}
+{#            <a href="{% url 'catalog_suppliers_page' %}">Список поставщиков </a>#}
+{#        </li>#}
+         {# Проверка на уровне фронтенда #}
+    {#    Проверка человека на авторизованность (схожая штука есть в views.py) #}
+    {# Если человек анонимный, то выводим авторизацию и регистрацию #}
+    {# Если человек авторизовался, то выводим выход из аккаунта #}
+{#    {% if request.user.is_anonymous %}#}
+{#        <li><a href="{% url 'log in' %}">Авторизация</a></li>#}
+{#        <li><a href="{% url 'regis' %}">Регистрация</a></li>#}
+{#    {% else %}#}
+{#        <li><a href="{% url 'log out' %}">Выход из аккаунта</a></li>#}
+{#    {% endif %}#}
+{##}
+{#    <li><a href="{% url 'anon' %}">Аноним</a></li>#}
+{#    <li><a href="{% url 'auth' %}">Авторизованный</a></li>#}
+{#    <li><a href="{% url 'add' %}">Добавление поставщика</a></li>#}
+{#    <li><a href="{% url 'add_change' %}">Добавление и изменение поставщика</a></li>#}
+{#    <li><a href="{% url 'change_address' %}">Изменение адреса</a></li>#}
+{##}
+{#    </ul>#}
+{#<div>#}
+{#    {% if request.user.is_anonymous %}#}
+{#        <h2>Аноним</h2>#}
+{#    {% endif %}#}
+{#    {% if request.user.is_authenticated %}#}
+{#        <h2>Авторизованный</h2>#}
+{#    {% endif %}#}
+{##}
+{# проверка прав доступа на фронтэнде происходит через perms#}
+{#    {% if perms.magazine.add_supplier %}#}
+{#        <h2>Можешь добавить поставщика</h2>#}
+{#    {% endif %}#}
+{#    {% if perms.magazine.add_supplier and perms.magazine.change_supplier %}#}
+{#        <h2>Можешь добавить и изменить поставщика</h2>#}
+{#    {% endif %}#}
+{#    {% if perms.magazine.change_address %}#}
+{#        <h2>Можешь изменить адрес</h2>#}
+{#    {% endif %}#}
+{##}
+{#</div>#}
+{#</body>#}
+{#</html>#}

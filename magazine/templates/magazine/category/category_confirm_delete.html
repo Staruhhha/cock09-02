@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title_name %}
+	Удаление {{ object.name }}
+{% endblock %}
+
+{% block content %}
+	<h1>Вы действительно хотите удалить {{ object.name }}?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">Да</button>
+        <a href="{% url 'category_list' %}" class="btn btn-outline-success">Нет</a>
+    </form>
+{% endblock %}

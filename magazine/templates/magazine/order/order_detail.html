@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title_name %}
+    Заказ: {{ object.pk }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {{ order.FIO_customer }}
+            </div>
+            <div class="col">
+                {{ order.delivery_address }}
+                {{ order.get_delivery_type_display }}
+            </div>
+        </div>
+        <div class="row row-cols-1">
+            {% for pos_product in object.pos_order_set.all %}
+                <div class="col">
+                    <a href="{% url 'product_detail_page' pos_product.product.pk %}">
+                        {{ pos_product.product.name }}
+                    </a>: {{ pos_product.product.price }} * {{ pos_product.count }} | {{ pos_product.discount }} %
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block additional_content %}
+    <a class="btn btn-success" href="{% url 'order_list' %}">Вернуться к списку заказов</a>
+
+    {% if perms.magazine.change_order %}
+         <a href="{% url 'order_update' object.pk%}" class="btn btn-warning">Изменить</a>
+    {% endif %}
+
+    {% if perms.magazine.delete_order %}
+        <a class="btn btn-danger" href="{% url 'order_delete' object.pk %}">Удалить с подтверждением</a>
+    {% endif %}
+    {% if perms.magazine.delete_order %}
+        <form method="post" action="{% url 'order_delete' object.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+    {% endif %}
+
+{% endblock %}

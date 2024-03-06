@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Поставщики</title>
+</head>
+<body>
+    <h1>Поставщики</h1>
+    <a href="{% url 'home_page' %}">Вернуться на домашнюю страницу</a>
+    {% if messages %}
+        <h1>Оповещение</h1>
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div>
+        <a href="{% url 'create_supplier_page' %}">Добавить поставщика</a>
+    </div>
+     <div>
+         {% for supplier in list_sup %}
+
+         <h1>{{ supplier.name }}</h1>
+         <div>
+             <p>
+                 Фамилия: {{ supplier.agent_firstname }}
+                 Имя: {{ supplier.agent_name }}
+                 Отчество: {{ supplier.agent_patronymic }}
+                 Телефон: {{ supplier.agent_telephone }}
+                 Адрес: {{ supplier.address }}
+             </p>
+            <p>
+                <a href="{% url 'details_supplier_page' supplier.pk %}">Подробнее...</a>
+            </p>
+         </div>
+              -------------------------------------------------------------------
+         {% endfor %}
+     </div>
+
+</body>
+</html>

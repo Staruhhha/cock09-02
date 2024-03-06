@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product }}</title>
+    <link rel="stylesheet" href="{% static 'magazine/css/bootstrap.css' %}">
+</head>
+<body>
+<div class="container ">
+    <div class="col-2"></div>
+    <div class="row">
+        <a href="{% url 'catalog_product_page' %}"> < Обратно к каталогу</a>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class="container">
+                <h1>Продукт: {{ product.name }}</h1>
+                <p>Описание: {{ product.description }}</p>
+                <h3>Цена: {{ product.price }}</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            {% if product.photo %}
+                <img src="{{ product.photo.url }}" class="img-thumbnail rounded" alt="...">
+            {% else %}
+                <img src="{% static 'magazine/image/98094191.jpg' %}" class="img-thumbnail rounded" alt="...">
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            <h2>Категория</h2>
+            <a href="#">{{ product.category.name }}
+                {% if product.category.description %}
+                    Описание категории: {{ product.category.description }}
+                {% endif %}
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            <h2>Тэги</h2>
+
+            {% for tag in product.tag.all %}
+                <a href="#">{{ tag }}.</a>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="row">
+        <h2>Характеристики</h2>
+
+        {% for pos_parametr in product.pos_parametr_set.all %}
+            <div class="col-4">{{ pos_parametr.parametr }} : {{ pos_parametr.value }}</div>
+        {% endfor %}
+
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'buy_product_page' product.pk %}" class="btn btn-success">Купить</a>
+    {% endif %}
+
+    {% if perms.magazine.add_product %}
+
+        <div class="row">
+            <h2>Заказы:</h2>
+
+            {% for order in product.order_set.all %}
+                <ul>
+                    <li>{{ order }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+
+
+        <div class="row">
+            <h2>Поставки:</h2>
+
+            {% for supply in product.supply_set.all %}
+                <ul>
+                    <li>{{ supply }}</li>
+                </ul>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

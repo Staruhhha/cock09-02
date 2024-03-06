@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <form>
+        {{ form.as_div }}
+
+        <button type="submit" class="btn btn-info">Применить фильтр</button>
+    </form>
+
+    {% if perms.magazine.add_product or perms.magazine.add_supplier %}
+        <div class="container">
+            {% if perms.magazine.add_product %}
+                <a href="{% url 'create_product_page' %}" class="btn btn-success">Создать товар</a>
+            {% endif %}
+
+            {% if perms.magazine.add_supplier %}
+                <a href="{% url 'add' %}" class="btn btn-success">Создать поставщика</a>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for object in list_object %}
+        <div class="col">
+          <div class="card shadow-sm">
+                        {% if object.photo %}
+                            <img src="{{ object.photo.url }}" class="bd-placeholder-img card-img-top" width="100%" height="50%" role="img" aria-label="Placeholder: Thumbnail" >
+                        {% else %}
+                            <img src="{% static 'magazine/image/98094191.jpg' %}" class="card-img-top" alt="...">
+                        {% endif %}
+                       <div class="card-body">
+              <p class="card-text">Категория: {{ object.category.name }}</p>
+              <p class="card-text">В наличии: {{ object.isActive}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-primary"><a class="" type="button" href="{% url 'product_detail_page' object.pk%}">Детальнее</a></button>
+                     {% if perms.magazine.delete_product %}
+                  <button type="button" class="btn btn-sm btn-outline-primary"><a type="button" href="{% url 'delete_product' object.pk %}">Удалить</a></button>
+
+                    {% endif %}
+                </div>
+                  <small class="text-body-secondary" style="font-size: 30px"> <a style=" color: #006b1b; font-weight: bold">{{ object.price }} ₽</a></small>
+              </div>
+            </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+{% endblock %}
+

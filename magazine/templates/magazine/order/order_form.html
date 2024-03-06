@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title_name %}
+    {{ action }} заказа {{ object.pk }}
+{% endblock %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-danger" type="submit">{{ action_button }} заказа</button>
+    </form>
+{% endblock %}
+
+{% block additional_content %}
+    <a class="btn btn-warning" href="{% url 'order_list' %}">Вернуться к списки заказов</a>
+{% endblock %}

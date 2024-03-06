@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список книг</title>
+</head>
+<body>
+    <div>
+        {% for book in filter_books %}
+            <h1>Название: {{ book.name }}</h1>
+            <p>Описание: {{ book.description }}</p>
+            <p>Цена: {{ book.price }}</p>
+            <p>Дата написания: {{ book.create_date }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

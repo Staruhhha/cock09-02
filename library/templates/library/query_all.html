@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Все книги</title>
+</head>
+<body>
+    <a href="/lib/">Назад</a>
+    <h1>Переменная, переданная из view</h1>
+    <p>
+        {{ list }}
+    </p>
+    <div>
+        {% for obj in list %}
+        <h1>{{ obj.name }}</h1>
+        <p>ID: {{ obj.pk }}</p>
+        <p>Описание книги: {{ obj.description }}</p>
+        <p>Количество страниц: {{ obj.count_pages }}</p>
+        <p>Цена: {{ obj.price }}</p>
+        <p>Дата выпуска: {{ obj.release_date }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

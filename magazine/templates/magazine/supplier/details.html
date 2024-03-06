@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ supplier_object.name }}</title>
+</head>
+<body>
+    <h1>Название поставщика: {{ supplier_object.name }}</h1>
+______________________________________________________________________________
+    <h3>
+        Все поставки данного поставщика
+    </h3>
+       {% for supply in  supplier_object.supply_set.all%}
+        <h3>Дата поставки: {{ supply.data_supply}}</h3>
+        {% for postavka in supply.pos_supply_set.all %}
+            <ul>
+                <li>
+                    Компонент поставки: {{ postavka.product.name }} - {{ postavka.count }} шт.
+                </li>
+            </ul>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>

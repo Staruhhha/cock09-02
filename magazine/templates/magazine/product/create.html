@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание товар</title>
+    <link rel="stylesheet" href="{% static 'magazine/css/bootstrap.css' %}">
+</head>
+<body>
+<div class="container">
+<h1>Создание товар</h1>
+
+    <form method="post" enctype="multipart/form-data">
+{#        Не забываем добавлять csrf_token, он нужен для передачи данных через POST #}
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button type="submit" class="btn btn-primary">Создать товар</button>
+    </form>
+    <a href="{% url 'catalog_product_page' %}" class="btn btn-info">Обратно к каталогу</a>
+</div>
+</body>
+</html>
